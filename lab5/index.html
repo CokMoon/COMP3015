@@ -6,16 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="myClasses.js" defer></script>
     <title>COMP3015 | Lab 5</title>
 </head>
 
 <body>
     <div id="wrapper">
         <h1>My Classes</h1>
-        <form action="get"><input type="text" name="classInput" id="classInput" placeholder="ex - COMP3015">
-            <input type="button" value="ADD">
+        <form action="get">
+            <input type="text" name="classInput" id="classInput" placeholder="ex - COMP3015">
+            <input type="button" value="ADD" id="add">
 
-            <ul class="myCourses">
+            <ul id="myCourses">
                 <li><input type="checkbox" name="COMP3015" id="COMP3015">
                     <label for="COMP3015">COMP3015</label>
                     <span class="delete"></span>
