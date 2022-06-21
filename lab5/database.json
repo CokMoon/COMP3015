@@ -1,1 +1,3 @@
-[{"name":"COMP3015","complete":false,"coursePic":""},{"name":"COMP3012","complete":false,"coursePic":""},{"name":"COMP2913","complete":false,"coursePic":""}]
+{
+    "courses": []
+}

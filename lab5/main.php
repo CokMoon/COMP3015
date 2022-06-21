@@ -2,8 +2,10 @@
 const FILE_TYPE = "image/png";
 const MAX_FILESIZE = 200000;
 
+print_r($_POST);
+
 // determine if the data exists
-if (!isset($_POST['classInput']) || empty(trim($_POST['classInput']))) {
+if (!isset($_POST['classInput'])) {
     die("<h2>Please enter a course name</h2>");
 }
 
@@ -29,13 +31,30 @@ if (isset($_FILES['coursePic']) && $_FILES['coursePic']['type'] == FILE_TYPE && 
 
 // ASSUME: json file already exist
 // read json file 
-$currentJsonContent = file_get_contents("database.json");
-$ContentArray = json_decode($currentJsonContent);
-array_push($ContentArray, $course);
+$ContentObjects = json_decode(file_get_contents("database.json", true));
+$ContentArray = $ContentObjects->courses;
 
+if (!empty($course->name))
+    array_push($ContentArray, $course);
+
+// check which course are compeleted
+foreach ($ContentArray as $courses => $course) {
+    if (isset($_POST[$course->name])) {
+        $course->complete = TRUE;
+    } else if (isset($_POST["delete"])) {
+        if ($_POST["delete"] == $course->name) {
+            unset($ContentArray[$courses]);
+            $ContentArray = array_values($ContentArray);
+        }
+    } else {
+        $course->complete = FALSE;
+    }
+}
+print_r($ContentArray);
+// check if course is deleted
 // write content to json file
-$finalJsonData = json_encode($ContentArray);
-// file_put_contents("database.json", $finalJsonData);
+$ContentObjects = (object) ["courses" => $ContentArray];
+file_put_contents("database.json", json_encode($ContentObjects, JSON_PRETTY_PRINT));
 ?>
 
 <!DOCTYPE html>
@@ -63,9 +82,13 @@ $finalJsonData = json_encode($ContentArray);
 
                 <?php
                 foreach ($ContentArray as $courses => $course) {
+                    $checked = $course->complete ? "checked" : "";
+
                     echo '<li>' .
-                        '<input type="checkbox" name=' . $course->name . '" id="' . $course->name . '">' .
-                        '<label for="' . $course->name . '">' . $course->name . '</label>' . '<span class="delete"></span></li>';
+                        '<input type="checkbox" name="' . $course->name . '" id="' . $course->name . '"' . $checked . '>' .
+                        '<label for="' . $course->name . '">' . $course->name . '</label>' .
+                        '<input type="submit" class="delete" id="delete" name="delete" value="' . $course->name . '">' .
+                        '<label id="deleteLabel" for="delete">X</label></li>';
                 }
                 ?>
             </ul>

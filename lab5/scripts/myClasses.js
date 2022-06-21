@@ -29,6 +29,24 @@ let inputedClass = "";
 document.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete")) {
     const deleteClass = event.target.parentNode;
-    deleteClass.remove();
+    // deleteClass.remove();
   }
+
+  if (event.target.type === "checkbox") {
+    // sumbit form to update course to complete
+    event.target.closest("form").submit();
+  }
+});
+
+document.addEventListener("auxclick", (event) => {
+  console.log(event.cancelable);
+
+  if (event.target.nodeName === "LABEL") {
+    const inputNode = document.createElement("INPUT");
+    event.target.appendChild(inputNode);
+  }
+});
+
+document.addEventListener("contextmenu", (event) => {
+  event.preventDefault();
 });
