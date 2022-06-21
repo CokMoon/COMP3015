@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="myClasses.js" defer></script>
+    <link rel="stylesheet" href="styles\style.css">
+    <script src="scripts\myClasses.js" defer></script>
     <title>COMP3015 | Lab 5</title>
 </head>
 
 <body>
     <div id="wrapper">
         <h1>My Classes</h1>
-        <form action="get">
+        <form enctype="multipart/form-data" method="post" action="./main.php">
             <input type="text" name="classInput" id="classInput" placeholder="ex - COMP3015">
-            <input type="button" value="ADD" id="add">
+            <input type="submit" value="ADD" id="add">
+            <input type="file" name="coursePic" id="coursePic">
 
             <ul id="myCourses">
                 <li><input type="checkbox" name="COMP3015" id="COMP3015">
@@ -33,7 +34,6 @@
             </ul>
         </form>
     </div>
-
 
 
 </body>
